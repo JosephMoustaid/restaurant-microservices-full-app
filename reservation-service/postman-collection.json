@@ -1,0 +1,220 @@
+{
+  "info": {
+    "name": "Reservation Service API",
+    "description": "Complete API collection for Reservation Microservice with OpenFeign integration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Reservation (Valid Restaurant)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"restaurantId\": 1,\n  \"customerName\": \"John Doe\",\n  \"reservationTime\": \"2025-11-25T19:00:00\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8082/reservations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["reservations"]
+        },
+        "description": "Create a reservation with a valid restaurant ID. This will call restaurant-service via Feign to verify the restaurant exists."
+      }
+    },
+    {
+      "name": "Create Reservation (Invalid Restaurant)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"restaurantId\": 999,\n  \"customerName\": \"Test User\",\n  \"reservationTime\": \"2025-11-25T19:00:00\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8082/reservations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["reservations"]
+        },
+        "description": "Try to create a reservation with an invalid restaurant ID. Should return 400 Bad Request."
+      }
+    },
+    {
+      "name": "Get All Reservations",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/reservations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["reservations"]
+        },
+        "description": "Retrieve all reservations from the database"
+      }
+    },
+    {
+      "name": "Get Reservation by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/reservations/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["reservations", "1"]
+        },
+        "description": "Get a specific reservation by ID"
+      }
+    },
+    {
+      "name": "Get Non-Existent Reservation",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/reservations/999",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["reservations", "999"]
+        },
+        "description": "Try to get a non-existent reservation. Should return 404 Not Found."
+      }
+    },
+    {
+      "name": "Create Reservation for Restaurant 2",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"restaurantId\": 2,\n  \"customerName\": \"Jane Smith\",\n  \"reservationTime\": \"2025-11-26T20:00:00\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8082/reservations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["reservations"]
+        },
+        "description": "Create a reservation for Sushi Palace (Restaurant ID 2)"
+      }
+    },
+    {
+      "name": "Create Reservation for Restaurant 3",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"restaurantId\": 3,\n  \"customerName\": \"Bob Wilson\",\n  \"reservationTime\": \"2025-11-27T18:30:00\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8082/reservations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["reservations"]
+        },
+        "description": "Create a reservation for Taco Fiesta (Restaurant ID 3)"
+      }
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8082/actuator/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8082",
+          "path": ["actuator", "health"]
+        },
+        "description": "Check service health status"
+      }
+    },
+    {
+      "name": "Create via API Gateway",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"restaurantId\": 1,\n  \"customerName\": \"Gateway Test User\",\n  \"reservationTime\": \"2025-11-28T19:00:00\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8888/reservations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8888",
+          "path": ["reservations"]
+        },
+        "description": "Create reservation through the API Gateway"
+      }
+    },
+    {
+      "name": "Get All via API Gateway",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8888/reservations",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8888",
+          "path": ["reservations"]
+        },
+        "description": "Get all reservations through the API Gateway"
+      }
+    },
+    {
+      "name": "Verify Restaurant Service (Direct)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/restaurants/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["restaurants", "1"]
+        },
+        "description": "Direct call to restaurant-service to verify it's running (this is what Feign does internally)"
+      }
+    }
+  ]
+}
+

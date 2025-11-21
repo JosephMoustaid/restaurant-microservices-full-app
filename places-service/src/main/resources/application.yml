@@ -1,0 +1,17 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: places-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+google:
+  places:
+    api-key: ${GOOGLE_PLACES_API_KEY:AIzaSyD4Yq1e1vI_mGSDpEcbAE-9iIzXLpFcWaU}
+    base-url: https://maps.googleapis.com/maps/api/place/nearbysearch/json
+

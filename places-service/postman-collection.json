@@ -1,0 +1,320 @@
+{
+  "info": {
+    "name": "Places Service API",
+    "description": "Complete API collection for Places Microservice with Google Places API integration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Search Restaurants in NYC",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/places/search?query=restaurant&location=40.7128,-74.0060&radius=5000",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "restaurant"
+            },
+            {
+              "key": "location",
+              "value": "40.7128,-74.0060"
+            },
+            {
+              "key": "radius",
+              "value": "5000"
+            }
+          ]
+        },
+        "description": "Search for restaurants near New York City with 5km radius"
+      }
+    },
+    {
+      "name": "Search Pizza Places",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/places/search?query=pizza&location=40.7128,-74.0060",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "pizza"
+            },
+            {
+              "key": "location",
+              "value": "40.7128,-74.0060"
+            }
+          ]
+        },
+        "description": "Search for pizza places in NYC"
+      }
+    },
+    {
+      "name": "Search Cafes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/places/search?query=cafe&location=40.7128,-74.0060&radius=3000",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "cafe"
+            },
+            {
+              "key": "location",
+              "value": "40.7128,-74.0060"
+            },
+            {
+              "key": "radius",
+              "value": "3000"
+            }
+          ]
+        },
+        "description": "Search for cafes with 3km radius"
+      }
+    },
+    {
+      "name": "Search Italian Restaurants",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/places/search?query=italian restaurant&location=40.7128,-74.0060",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "italian restaurant"
+            },
+            {
+              "key": "location",
+              "value": "40.7128,-74.0060"
+            }
+          ]
+        },
+        "description": "Search for Italian restaurants"
+      }
+    },
+    {
+      "name": "Search in Los Angeles",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/places/search?query=restaurant&location=34.0522,-118.2437&radius=5000",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "restaurant"
+            },
+            {
+              "key": "location",
+              "value": "34.0522,-118.2437"
+            },
+            {
+              "key": "radius",
+              "value": "5000"
+            }
+          ]
+        },
+        "description": "Search for restaurants in Los Angeles"
+      }
+    },
+    {
+      "name": "Search in San Francisco",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/places/search?query=sushi&location=37.7749,-122.4194",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "sushi"
+            },
+            {
+              "key": "location",
+              "value": "37.7749,-122.4194"
+            }
+          ]
+        },
+        "description": "Search for sushi in San Francisco"
+      }
+    },
+    {
+      "name": "Search with Large Radius",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/places/search?query=restaurant&location=40.7128,-74.0060&radius=15000",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "restaurant"
+            },
+            {
+              "key": "location",
+              "value": "40.7128,-74.0060"
+            },
+            {
+              "key": "radius",
+              "value": "15000"
+            }
+          ]
+        },
+        "description": "Search with 15km radius"
+      }
+    },
+    {
+      "name": "Search Bars",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/places/search?query=bar&location=40.7128,-74.0060",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "bar"
+            },
+            {
+              "key": "location",
+              "value": "40.7128,-74.0060"
+            }
+          ]
+        },
+        "description": "Search for bars in NYC"
+      }
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/actuator/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["actuator", "health"]
+        },
+        "description": "Check service health status"
+      }
+    },
+    {
+      "name": "Search via API Gateway",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8888/places/search?query=restaurant&location=40.7128,-74.0060",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8888",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "restaurant"
+            },
+            {
+              "key": "location",
+              "value": "40.7128,-74.0060"
+            }
+          ]
+        },
+        "description": "Search through API Gateway on port 8888"
+      }
+    },
+    {
+      "name": "Search Bakery",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/places/search?query=bakery&location=40.7128,-74.0060",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "bakery"
+            },
+            {
+              "key": "location",
+              "value": "40.7128,-74.0060"
+            }
+          ]
+        },
+        "description": "Search for bakeries"
+      }
+    },
+    {
+      "name": "Search Asian Food",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8083/places/search?query=asian food&location=40.7128,-74.0060&radius=4000",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8083",
+          "path": ["places", "search"],
+          "query": [
+            {
+              "key": "query",
+              "value": "asian food"
+            },
+            {
+              "key": "location",
+              "value": "40.7128,-74.0060"
+            },
+            {
+              "key": "radius",
+              "value": "4000"
+            }
+          ]
+        },
+        "description": "Search for Asian food with 4km radius"
+      }
+    }
+  ]
+}
+

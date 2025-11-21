@@ -1,0 +1,194 @@
+{
+  "info": {
+    "name": "Restaurant Service API",
+    "description": "Complete API collection for Restaurant Microservice",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Restaurants",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/restaurants",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["restaurants"]
+        },
+        "description": "Retrieve all restaurants from the database"
+      }
+    },
+    {
+      "name": "Get Restaurant by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/restaurants/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["restaurants", "1"]
+        },
+        "description": "Get a specific restaurant by ID"
+      }
+    },
+    {
+      "name": "Get Restaurants with Pagination",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/restaurants?page=0&size=5",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["restaurants"],
+          "query": [
+            {"key": "page", "value": "0"},
+            {"key": "size", "value": "5"}
+          ]
+        },
+        "description": "Get paginated results"
+      }
+    },
+    {
+      "name": "Get Restaurants Sorted by Rating",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/restaurants?sort=rating,desc",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["restaurants"],
+          "query": [
+            {"key": "sort", "value": "rating,desc"}
+          ]
+        },
+        "description": "Get restaurants sorted by rating (descending)"
+      }
+    },
+    {
+      "name": "Create Restaurant",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"New Fusion Restaurant\",\n  \"address\": \"100 Broadway, New York, NY 10005\",\n  \"cuisine\": \"Fusion\",\n  \"rating\": 4.6,\n  \"latitude\": 40.7074,\n  \"longitude\": -74.0113\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/restaurants",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["restaurants"]
+        },
+        "description": "Create a new restaurant"
+      }
+    },
+    {
+      "name": "Update Restaurant",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Restaurant Name\",\n  \"address\": \"123 Updated St, New York, NY 10001\",\n  \"cuisine\": \"Updated Cuisine\",\n  \"rating\": 4.9,\n  \"latitude\": 40.7128,\n  \"longitude\": -74.0060\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/restaurants/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["restaurants", "1"]
+        },
+        "description": "Update an existing restaurant"
+      }
+    },
+    {
+      "name": "Partial Update Restaurant",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"rating\": 5.0\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/restaurants/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["restaurants", "1"]
+        },
+        "description": "Partially update a restaurant (e.g., only rating)"
+      }
+    },
+    {
+      "name": "Delete Restaurant",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/restaurants/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["restaurants", "1"]
+        },
+        "description": "Delete a restaurant by ID"
+      }
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/actuator/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["actuator", "health"]
+        },
+        "description": "Check service health status"
+      }
+    },
+    {
+      "name": "Get via API Gateway",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8888/restaurants",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8888",
+          "path": ["restaurants"]
+        },
+        "description": "Access restaurants through the API Gateway"
+      }
+    }
+  ]
+}
+

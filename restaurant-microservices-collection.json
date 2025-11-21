@@ -1,0 +1,667 @@
+{
+	"info": {
+		"_postman_id": "f47ac10b-58cc-4372-a567-0e02b2c40e70",
+		"name": "Restaurant Microservices Collection",
+		"description": "API collection for testing Restaurant Microservices project including API Gateway, Restaurant Service, Reservation Service, and Places Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12345678"
+	},
+	"item": [
+		{
+			"name": "Eureka Server",
+			"item": [
+				{
+					"name": "Check Eureka Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8761",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8761"
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eureka Apps",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8761/eureka/apps",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8761",
+							"path": [
+								"eureka",
+								"apps"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "API Gateway",
+			"item": [
+				{
+					"name": "Gateway Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/actuator/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurant Service (Direct)",
+			"item": [
+				{
+					"name": "Get All Restaurants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Restaurant by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/restaurants/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restaurants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Restaurant",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Test Restaurant\",\n  \"address\": \"123 Test St, Test City, TC 12345\",\n  \"cuisine\": \"Test Cuisine\",\n  \"rating\": 4.5,\n  \"latitude\": 40.7128,\n  \"longitude\": -74.0060\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Restaurant",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Restaurant\",\n  \"address\": \"456 Updated St, Updated City, UC 54321\",\n  \"cuisine\": \"Updated Cuisine\",\n  \"rating\": 4.8,\n  \"latitude\": 40.7589,\n  \"longitude\": -73.9851\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8081/restaurants/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restaurants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Restaurant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/restaurants/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"restaurants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurant Service (via Gateway)",
+			"item": [
+				{
+					"name": "Get All Restaurants via Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Restaurant by ID via Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/restaurants/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"restaurants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Restaurant via Gateway",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Gateway Test Restaurant\",\n  \"address\": \"789 Gateway St, Gateway City, GC 98765\",\n  \"cuisine\": \"Gateway Cuisine\",\n  \"rating\": 4.7,\n  \"latitude\": 40.7484,\n  \"longitude\": -73.9857\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8888/restaurants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservation Service (Direct)",
+			"item": [
+				{
+					"name": "Get All Reservations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/reservations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reservation by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/reservations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"reservations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create New Reservation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"restaurantId\": 1,\n  \"customerName\": \"John Doe\",\n  \"reservationTime\": \"2025-11-25T19:30:00\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8082/reservations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservation Service (via Gateway)",
+			"item": [
+				{
+					"name": "Get All Reservations via Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/reservations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Reservation via Gateway",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"restaurantId\": 2,\n  \"customerName\": \"Jane Smith\",\n  \"reservationTime\": \"2025-11-26T20:00:00\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8888/reservations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Places Service (Direct)",
+			"item": [
+				{
+					"name": "Search Places by Location",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/places/search?location=40.7128,-74.0060&radius=5000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"places",
+								"search"
+							],
+							"query": [
+								{
+									"key": "location",
+									"value": "40.7128,-74.0060"
+								},
+								{
+									"key": "radius",
+									"value": "5000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Places by Query and Location",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/places/search?query=restaurant&location=40.7589,-73.9851&radius=3000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"places",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "restaurant"
+								},
+								{
+									"key": "location",
+									"value": "40.7589,-73.9851"
+								},
+								{
+									"key": "radius",
+									"value": "3000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Places - Default Radius",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8083/places/search?query=coffee&location=40.7484,-73.9857",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"places",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "coffee"
+								},
+								{
+									"key": "location",
+									"value": "40.7484,-73.9857"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Places Service (via Gateway)",
+			"item": [
+				{
+					"name": "Search Places via Gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/places/search?query=restaurant&location=40.7128,-74.0060&radius=5000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"places",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "restaurant"
+								},
+								{
+									"key": "location",
+									"value": "40.7128,-74.0060"
+								},
+								{
+									"key": "radius",
+									"value": "5000"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Integration Tests",
+			"item": [
+				{
+					"name": "Full Flow - Create Restaurant then Reservation",
+					"item": [
+						{
+							"name": "1. Create Restaurant",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Restaurant created successfully\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"// Save restaurant ID for next request",
+											"var jsonData = pm.response.json();",
+											"pm.collectionVariables.set(\"restaurant_id\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Integration Test Restaurant\",\n  \"address\": \"999 Test Ave, Test City, TC 99999\",\n  \"cuisine\": \"Integration\",\n  \"rating\": 5.0,\n  \"latitude\": 40.7128,\n  \"longitude\": -74.0060\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8888/restaurants",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"restaurants"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "2. Create Reservation for Restaurant",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Reservation created successfully\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});",
+											"",
+											"pm.test(\"Reservation has correct restaurant ID\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.restaurantId).to.eql(parseInt(pm.collectionVariables.get(\"restaurant_id\")));",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"restaurantId\": {{restaurant_id}},\n  \"customerName\": \"Integration Test User\",\n  \"reservationTime\": \"2025-12-01T18:00:00\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8888/reservations",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8888",
+									"path": [
+										"reservations"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "restaurant_id",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}
+
