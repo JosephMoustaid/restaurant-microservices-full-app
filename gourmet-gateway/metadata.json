@@ -1,0 +1,7 @@
+{
+  "name": "Gourmet Gateway",
+  "description": "A comprehensive restaurant management dashboard connecting to microservices for restaurants, reservations, and place discovery.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
