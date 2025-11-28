@@ -22,6 +22,11 @@ spring:
           uri: lb://places-service
           predicates:
             - Path=/places/**
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/auth/**, /users/**
+
       globalcors:
         cors-configurations:
           '[/**]':

@@ -16,7 +16,7 @@ A complete microservices architecture for restaurant management built with Sprin
 
 ## 🏗️ Architecture Overview
 
-The project consists of 5 microservices:
+The project consists of 6 microservices:
 
 ```
                     ┌─────────────────┐
@@ -24,13 +24,13 @@ The project consists of 5 microservices:
                     │   Port: 8888    │
                     └─────────────────┘
                             │
-                ┌───────────┼───────────┐
-                │           │           │
-      ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
-      │ Restaurant  │ │ Reservation │ │   Places    │
-      │  Service    │ │   Service   │ │   Service   │
-      │ Port: 8081  │ │ Port: 8082  │ │ Port: 8083  │
-      └─────────────┘ └─────────────┘ └─────────────┘
+            ┌───────────────┼───────────────┬───────────┐
+            │               │               │           │
+  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐
+  │ Restaurant  │ │ Reservation │ │   Places    │ │    User     │
+  │  Service    │ │   Service   │ │   Service   │ │  Service    │
+  │ Port: 8081  │ │ Port: 8082  │ │ Port: 8083  │ │ Port: 8084  │
+  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘
                             │
                 ┌───────────────────────┐
                 │   Eureka Server       │
@@ -50,6 +50,7 @@ The project consists of 5 microservices:
 - **Spring Cloud Gateway**
 - **Spring Cloud Netflix Eureka**
 - **OpenFeign** (Service Communication)
+- **Spring Security & JWT** (Authentication)
 - **PostgreSQL** (Database)
 - **Lombok** (Code Generation)
 - **Maven** (Build Tool)
@@ -96,6 +97,16 @@ The project consists of 5 microservices:
   - Location-based search
   - Query-based search
 
+### 6. User Service (Port: 8084)
+- **Purpose**: User authentication and management with JWT
+- **Features**:
+  - User registration and login
+  - JWT token-based authentication
+  - BCrypt password hashing
+  - User location management
+  - Spring Security integration
+- **Entity**: User (id, username, email, password, latitude, longitude, role)
+
 ## 📋 Prerequisites
 
 Before running this project, ensure you have:
@@ -141,11 +152,13 @@ psql -U postgres
 -- Create databases
 CREATE DATABASE restaurantsdb;
 CREATE DATABASE reservationsdb;
+CREATE DATABASE usersdb;
 
 -- Create user (optional)
 CREATE USER restaurant_user WITH PASSWORD 'restaurant_pass';
 GRANT ALL PRIVILEGES ON DATABASE restaurantsdb TO restaurant_user;
 GRANT ALL PRIVILEGES ON DATABASE reservationsdb TO restaurant_user;
+GRANT ALL PRIVILEGES ON DATABASE usersdb TO restaurant_user;
 ```
 
 ### 3. Database Configuration
@@ -165,7 +178,8 @@ Services must be started in the following order:
 2. **Restaurant Service** 
 3. **Reservation Service**
 4. **Places Service**
-5. **API Gateway** (last)
+5. **User Service**
+6. **API Gateway** (last)
 
 ### Start Each Service
 
@@ -198,7 +212,14 @@ cd places-service
 # Verify registration in Eureka dashboard
 ```
 
-#### 5. API Gateway
+#### 5. User Service
+```bash
+cd user-service
+./mvnw.cmd spring-boot:run
+# Verify registration in Eureka dashboard
+```
+
+#### 6. API Gateway
 ```bash
 cd api-gateway
 ./mvnw.cmd spring-boot:run
@@ -206,7 +227,7 @@ cd api-gateway
 ```
 
 ### Verify All Services
-Check Eureka dashboard at http://localhost:8761 - you should see all 4 services registered.
+Check Eureka dashboard at http://localhost:8761 - you should see all 5 services registered.
 
 ## 🧪 Testing the APIs
 
@@ -283,6 +304,56 @@ curl "http://localhost:8083/places/search?query=restaurant&location=40.7589,-73.
 ```bash
 # Search places via gateway
 curl "http://localhost:8888/places/search?query=restaurant&location=40.7128,-74.0060&radius=5000"
+```
+
+#### Test User Service (Direct)
+```bash
+# Register a new user
+curl -X POST http://localhost:8084/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "testuser",
+    "email": "testuser@example.com",
+    "password": "password123",
+    "latitude": 40.7128,
+    "longitude": -74.0060
+  }'
+
+# Login (returns JWT token)
+curl -X POST http://localhost:8084/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "testuser",
+    "password": "password123"
+  }'
+
+# Get current user (requires JWT token)
+curl http://localhost:8084/users/me \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+
+# Update location (requires JWT token)
+curl -X PUT http://localhost:8084/users/location \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -d '{
+    "latitude": 40.7589,
+    "longitude": -73.9851
+  }'
+```
+
+#### Test User Service (via Gateway)
+```bash
+# Login via gateway
+curl -X POST http://localhost:8888/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "admin",
+    "password": "admin123"
+  }'
+
+# Get user via gateway (requires JWT token)
+curl http://localhost:8888/users/me \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
 ## 📚 API Documentation

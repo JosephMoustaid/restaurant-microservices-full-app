@@ -6,6 +6,7 @@ echo.
 echo Databases required:
 echo - restaurantsdb
 echo - reservationsdb
+echo - usersdb
 echo.
 pause
 
@@ -46,7 +47,16 @@ timeout /t 30 /nobreak
 
 echo.
 echo ============================================
-echo 5. Starting API Gateway (Port 8888)...
+echo 5. Starting User Service (Port 8084)...
+echo ============================================
+start cmd /k "cd user-service && title User-Service && .\mvnw.cmd spring-boot:run"
+echo Waiting 30 seconds for Places Service to register...
+timeout /t 30 /nobreak
+
+
+echo.
+echo ============================================
+echo 6. Starting API Gateway (Port 8888)...
 echo ============================================
 start cmd /k "cd api-gateway && title API-Gateway && .\mvnw.cmd spring-boot:run"
 
