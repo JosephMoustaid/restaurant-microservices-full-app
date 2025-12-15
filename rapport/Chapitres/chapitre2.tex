@@ -1,0 +1,64 @@
+Ce chapitre présente l'architecture du système, les microservices et les API.
+
+\section{Architecture globale}
+
+Le système comprend : (1) Interface React/TypeScript, (2) Gateway Spring Cloud (8888), (3) Six microservices, (4) Bases PostgreSQL isolées, (5) Serveur Eureka (8761).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Images/architecture_globale.png}
+    \caption{Architecture du système Gourmet Gateway}
+    \label{fig:architecture}
+\end{figure}
+
+\textbf{Flux} : Client → Gateway → Eureka (localisation) → Service → Base → Gateway → Client. Le service Reservation valide via OpenFeign l'existence du restaurant.
+
+\section{Microservices}
+
+\subsection{Eureka Server (8761)}
+Registre centralisé : enregistrement automatique, heartbeat 30s, dashboard web.
+
+\subsection{API Gateway (8888)}
+Point d'entrée unique avec routage : /restaurants/** → restaurant-service, /reservations/** → reservation-service, /places/** → places-service, /auth/**, /users/** → user-service. CORS activé.
+
+\subsection{Service Restaurant (8081)}
+Spring Data REST + JPA, PostgreSQL (restaurantsdb). Table : id, name, address, cuisine, rating, latitude, longitude. Index sur cuisine, rating et location. 15 restaurants NYC pré-chargés.
+
+\subsection{Service Reservation (8082)}
+Spring Data JPA + OpenFeign, PostgreSQL (reservationsdb). Table : id, restaurant\_id, customer\_name, reservation\_time. Validation restaurant via Feign avant création. 10 réservations exemple.
+
+\subsection{Service Places (8083)}
+Spring WebFlux + WebClient, sans base (stateless). Appels réactifs à Google Places API avec paramètres : query, location, radius. WebFlux choisi pour I/O non-bloquant.
+
+\subsection{Service User (8084)}
+Spring Security + JWT + BCrypt, PostgreSQL (usersdb). Table : id, username (unique), email (unique), password (BCrypt), latitude, longitude, role. JWT HS256, validité 24h.
+
+\section{API REST}
+
+\textbf{Restaurant} : GET/POST/PUT/DELETE /restaurants, GET /restaurants/\{id\}
+
+\textbf{Reservation} : GET /reservations, POST /reservations, GET /reservations/\{id\}
+
+\textbf{User} : POST /auth/register, POST /auth/login, GET /users/me, PUT /users/location
+
+\textbf{Places} : GET /places/search?query=\&location=\&radius=
+
+\section{Stratégie de données}
+
+\textbf{Database per Service} : Chaque microservice possède sa base PostgreSQL (restaurantsdb, reservationsdb, usersdb). 
+
+\textbf{Avantages} : Découplage total, évolution indépendante des schémas, pas de contention.
+
+\textbf{Inconvénients} : Pas de jointures SQL inter-services, cohérence éventuelle.
+
+\section{Sécurité}
+
+\textbf{Flux JWT} : Login → Validation → Génération JWT (clé secrète) → Stockage localStorage → En-tête Authorization → Validation serveur.
+
+\textbf{BCrypt} : Salt unique + 1024 itérations → Hash 60 caractères irréversible.
+
+\section{Déploiement}
+
+\textbf{Ordre} : PostgreSQL → Eureka (8761) → Restaurant (8081) → Reservation (8082) → Places (8083) → User (8084) → Gateway (8888) → Frontend.
+
+\textbf{Ports} : Eureka 8761, Services 8081-8084, Gateway 8888, PostgreSQL 5432, Frontend 3000+.

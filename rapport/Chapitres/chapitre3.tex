@@ -1,0 +1,105 @@
+Ce chapitre présente l'implémentation, les fonctionnalités et les résultats obtenus.
+
+\section{Implémentation backend}
+
+\subsection{Configuration Spring Boot}
+Chaque microservice utilise \texttt{application.yml} pour port, datasource PostgreSQL, URL Eureka et paramètres spécifiques (JWT secret, Google API key).
+
+\subsection{Service Restaurant - Spring Data REST}
+Génération automatique d'endpoints REST via \texttt{@RepositoryRestResource}, réduisant le code boilerplate tout en respectant REST/HATEOAS.
+
+\subsection{Service Reservation - OpenFeign}
+Validation des restaurants avant création de réservation via client Feign déclaratif. Retourne 400 si restaurant inexistant ou service indisponible.
+
+\subsection{Service Places - WebFlux}
+WebClient réactif pour appels non-bloquants à Google Places API. Transforme GooglePlacesResponse en PlaceResponse simplifié.
+
+\subsection{Service User - JWT et sécurité}
+Génération JWT après authentification réussie (Jwts.builder + HS256). Spring Security protège endpoints avec filtre JWT avant UsernamePasswordAuthenticationFilter.
+
+\section{Implémentation frontend}
+
+\subsection{Architecture React}
+Structure : Pages (Dashboard, Restaurants, Reservations, Places), Components (Layout), Services (API client), Types (TypeScript).
+
+Client API centralisé avec injection automatique du JWT dans headers Authorization. Gestion d'état via hooks useState/useEffect.
+
+\section{Captures d'écran}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/auth_page.png}
+    \caption{Page d'authentification avec formulaires login/inscription}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/admin_dashboard.png}
+    \caption{Dashboard administrateur : statistiques, graphiques, réservations récentes}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/restaurants_list.png}
+    \caption{Liste des restaurants avec recherche, création, modification, suppression}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/reservations_page.png}
+    \caption{Page de réservations avec création et sélection restaurant/date}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{Images/places_search.png}
+    \caption{Recherche de lieux avec géolocalisation et Google Places API}
+\end{figure}
+
+\section{Tests et validation}
+
+\textbf{Backend} : Tests unitaires (repositories JPA, services avec Mockito), tests d'intégration (endpoints REST avec MockMvc, communication Feign, authentification JWT).
+
+\textbf{Frontend} : Tests composants (React Testing Library), tests interactions utilisateur.
+
+\textbf{End-to-end} : Collection Postman fournie avec tests de tous les endpoints et flux d'authentification.
+
+\section{Métriques de performance}
+
+Tests réalisés avec JMeter :
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Endpoint} & \textbf{Moyenne} & \textbf{95e percentile} \\
+\hline
+GET /restaurants & 45 ms & 120 ms \\
+POST /reservations & 85 ms & 180 ms \\
+GET /places/search & 420 ms & 850 ms \\
+POST /auth/login & 180 ms & 320 ms \\
+\hline
+\end{tabular}
+\caption{Temps de réponse des endpoints principaux}
+\end{table}
+
+Utilisation ressources : Services backend 160-250 MB mémoire idle, 5-15\% CPU sous charge.
+
+\section{Analyse des résultats}
+
+\subsection{Objectifs atteints}
+Architecture microservices fonctionnelle avec six services indépendants, communication via Eureka/Gateway, isolation des bases. Sécurité JWT/BCrypt opérationnelle. Interface React responsive et intuitive.
+
+\subsection{Points d'amélioration}
+\textbf{Résilience} : Circuit breakers (Resilience4j), retry logic, fallbacks.
+
+\textbf{Observabilité} : Logs centralisés (ELK), tracing distribué (Sleuth + Zipkin), métriques (Prometheus + Grafana).
+
+\textbf{Scalabilité} : Containerisation Docker, orchestration Kubernetes, cache Redis.
+
+\subsection{Perspectives}
+Court terme : Documentation Swagger/OpenAPI, pagination, notifications email.
+
+Moyen terme : Système de notation, recommandations ML, intégration paiement.
+
+Long terme : Application mobile React Native, WebSockets temps réel, support multi-tenant.

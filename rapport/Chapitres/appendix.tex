@@ -1,0 +1,52 @@
+\chapter{Annexe A : Configuration et Code}
+
+\section{Configuration Spring Cloud Gateway}
+
+\begin{verbatim}
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: restaurant-service
+          uri: lb://restaurant-service
+          predicates:
+            - Path=/restaurants/**
+\end{verbatim}
+
+\section{Client OpenFeign}
+
+\begin{verbatim}
+@FeignClient(name = "restaurant-service")
+public interface RestaurantClient {
+    @GetMapping("/restaurants/{id}")
+    Object getRestaurant(@PathVariable Long id);
+}
+\end{verbatim}
+
+\section{Génération JWT}
+
+\begin{verbatim}
+public String generateToken(String username) {
+    return Jwts.builder()
+        .setSubject(username)
+        .setIssuedAt(new Date())
+        .setExpiration(new Date(now + expiration))
+        .signWith(getSigningKey(), HS256)
+        .compact();
+}
+\end{verbatim}
+
+\chapter{Annexe B : Installation}
+
+\section{Prérequis}
+Java 17/21, PostgreSQL 12+, Maven 3.8+, Node.js 18+, Google Places API Key.
+
+\section{Installation}
+\begin{enumerate}
+    \item Créer bases PostgreSQL : \texttt{restaurantsdb}, \texttt{reservationsdb}, \texttt{usersdb}
+    \item Configurer \texttt{application.yml} de chaque service
+    \item Démarrer services : \texttt{./mvnw spring-boot:run}
+    \item Frontend : \texttt{cd gourmet-gateway \&\& npm install \&\& npm run dev}
+\end{enumerate}
+
+Vérification : Eureka http://localhost:8761, Gateway http://localhost:8888, Frontend http://localhost:3000.

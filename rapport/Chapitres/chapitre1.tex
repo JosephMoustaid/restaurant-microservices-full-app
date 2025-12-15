@@ -1,0 +1,94 @@
+Ce chapitre présente les concepts d'architecture microservices et les technologies utilisées.
+
+\section{Architecture Microservices}
+
+L'architecture microservices structure une application comme une collection de services autonomes et indépendamment déployables. Chaque service possède sa base de données (principe "database per service") et communique via des API REST.
+
+\textbf{Avantages} : scalabilité indépendante, résilience, déploiement continu, diversité technologique.
+
+\subsection{Patterns clés}
+
+\textbf{Service Discovery} : Registre centralisé (Eureka) pour localiser dynamiquement les services.
+
+\textbf{API Gateway} : Point d'entrée unique gérant le routage et les préoccupations transversales (CORS, authentification).
+
+\textbf{Database per Service} : Chaque microservice possède sa propre base de données pour garantir le découplage.
+
+\section{Technologies Backend}
+
+\subsection{Spring Boot et Spring Cloud}
+
+\textbf{Spring Boot} est le framework principal utilisé pour développer les microservices. Il offre :
+\begin{itemize}
+    \item Configuration automatique et convention over configuration
+    \item Serveur embarqué (Tomcat, Netty)
+    \item Écosystème riche avec Spring Data, Spring Security, etc.
+    \item Production-ready features (health checks, metrics)
+\end{itemize}
+
+\textbf{Spring Cloud} fournit des outils pour construire des systèmes distribués :
+\begin{itemize}
+    \item \textbf{Spring Cloud Netflix Eureka} : Service discovery
+    \item \textbf{Spring Cloud Gateway} : API Gateway réactive
+    \item \textbf{Spring Cloud OpenFeign} : Client REST déclaratif
+    \item \textbf{Spring Cloud LoadBalancer} : Équilibrage de charge côté client
+\end{itemize}
+
+\subsection{Spring WebFlux}
+
+Spring WebFlux est le framework réactif de Spring utilisé pour le service Places. Il permet une programmation non-bloquante basée sur le pattern Reactor, idéale pour les appels d'API externes.
+
+\section{Technologies Backend}
+
+\textbf{Spring Boot 3.x/4.x} : Framework principal avec configuration automatique, serveur embarqué et écosystème complet (Data JPA, Security).
+
+\textbf{Spring Cloud} : Outils pour systèmes distribués incluant Eureka (service discovery), Gateway (API réactive), OpenFeign (client REST déclaratif).
+
+\textbf{Spring WebFlux} : Framework réactif pour programmation non-bloquante, utilisé dans le service Places pour les appels API externes.
+
+\textbf{PostgreSQL} : SGBD choisi pour sa conformité ACID, support JSON et extensions géospatiales.
+
+\textbf{JWT/BCrypt} : JWT (RFC 7519) pour l'authentification stateless avec Header/Payload/Signature. BCrypt pour hachage sécurisé des mots de passe avec salt automatique et 2\textsuperscript{10} itérations.ite}
+
+Vite est un outil de build moderne offrant :
+\begin{itemize}
+    \item Démarrage ultra-rapide du serveur de développement
+    \item Hot Module Replacement (HMR) instantané
+    \item Build optimisé avec Rollup
+    \item Support natif de TypeScript et JSX
+\end{itemize}
+
+\section{Communication et intégration}
+
+\subsection{REST API}
+
+Les microservices communiquent via des API REST (Representational State Transfer) :
+\begin{itemize}
+    \item Architecture sans état (stateless)
+    \item Utilisation des méthodes HTTP (GET, POST, PUT, DELETE)
+    \item Format JSON pour l'échange de données
+\section{Technologies Frontend}
+
+\textbf{React 19} : Bibliothèque JavaScript avec composants réutilisables, Virtual DOM et Hooks pour la gestion d'état.
+
+\textbf{TypeScript} : Typage statique pour détection d'erreurs, autocomplétion et meilleure maintenabilité.
+
+\textbf{Vite} : Build tool moderne avec HMR instantané et support natif TypeScript.
+
+\section{Intégration}
+
+\textbf{REST API} : Communication stateless via HTTP (GET, POST, PUT, DELETE) avec format JSON.
+
+\textbf{OpenFeign} : Client REST déclaratif simplifiant les appels inter-services (ex: Reservation vérifie Restaurant).
+
+\textbf{Google Places API} : Recherche d'établissements à proximité avec géolocalisation.
+
+\section{Justification des choix}
+
+\textbf{Microservices} : Scalabilité indépendante, isolation des pannes, diversité technologique (WebFlux pour Places, Spring Data REST pour Restaurant).
+
+\textbf{Spring Cloud Gateway} : Performance supérieure (WebFlux non-bloquant) vs Zuul.
+
+\textbf{JWT} : Authentification stateless, scalable horizontalement, standard industriel.
+
+\textbf{React + TypeScript} : Écosystème mature, sécurité du typage, expérience développeur optimale.
